@@ -96,15 +96,15 @@ class BinarySearchTree(BinaryTree):
         right = self.showRight()
         
         if new == currentValue:
-            print "the item " + str(new) +" is found "
+            print "the item " + str(new) +" is found in root"
             return (self,self)
         
         elif new == left:
-            print "the item " + str(new) +" is found "
+            print "the item " + str(new) +" is found in left"
             return (self,self._left) #parent and self
         
         elif new == right:
-            print "the item " + str(new) +" is found "
+            print "the item " + str(new) +" is found right"
             return (self,self._right) #parent and self
         
         elif new > currentValue:
@@ -126,22 +126,24 @@ class BinarySearchTree(BinaryTree):
         #search the target item
         #if item exist, return target's parent and target
         
-        result = self.search(item) 
+        result = self.search(item)  # return target's parent node and target
         try :
-            
             if result[1]._left and result[1]._right:  #if the node has two childern
                 pointer = result[1]._left
-                parent = None
+                parent = result[1]._left
+
                 while pointer._right != None:
                     parent = pointer
                     pointer = pointer._right
                 result[1].changeValue(pointer.showValue())
-
-                if pointer._left != None:
-                    parent._left = pointer._left
-                    parent._right = None
+                
+                if pointer == parent:
+                    result[1]._left = None
                 else:
-                    parent._right = None
+                    if pointer._left == None:
+                        parent._right = None
+                    else:
+                        parent._right = pointer_left
 
             elif result[1]._left: #if the target node only has left child
                 #comparing with target parent node's value and connect to the target node 's child
@@ -177,7 +179,7 @@ if __name__ == '__main__':
     bst.add(4)
     bst.add(1)
     bst.add(5)
-    bst.add(16)
+    bst.add(3)
     bst.add(8)
     bst.add(11)
     bst.add(12)
@@ -193,12 +195,12 @@ if __name__ == '__main__':
     bst.delete(16)
     
     #delete non exit value
-    bst.delete(100)
+    bst.delete(4)
     
     # search a value
     bst.search(15)
     
     #print
     bst.preorder()
-    bst.inorder()
-    bst.postorder()
+#     bst.inorder()
+#     bst.postorder()
